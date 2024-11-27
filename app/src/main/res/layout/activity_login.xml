@@ -8,78 +8,34 @@
     android:layout_height="match_parent"
     tools:context=".LoginActivity">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#87CEEB"
-        tools:layout_editor_absoluteX="61dp"
-        tools:layout_editor_absoluteY="-16dp">
+        android:background="#87CEEB">
 
-        <TextView
-            android:id="@+id/loginTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="50dp"
-            android:text="Welcome Back"
-            android:textSize="24sp"
-            android:textColor="#FFFFFF"
-            android:textStyle="bold"/>
-
-        <EditText
-            android:id="@+id/emailInput"
+        <!-- White Box -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/whiteBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-            android:layout_below="@id/loginTitle"
-            android:layout_marginTop="30dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:hint="Email"
-            android:backgroundTint="#FFFFFF"
-            android:textColor="#FFFFFF"/>
-=======
-            android:layout_centerInParent="true"
             android:layout_margin="30dp"
-            android:backgroundTint="#FFFFFF"
             app:cardCornerRadius="20dp"
-            app:cardElevation="4dp">
->>>>>>> Stashed changes
+            app:cardElevation="4dp"
+            android:layout_centerInParent="true">
 
-        <EditText
-            android:id="@+id/passwordInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/emailInput"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:hint="Password"
-            android:backgroundTint="#FFFFFF"
-            android:textColor="#FFFFFF"
-            android:inputType="textPassword"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="20dp">
 
-<<<<<<< Updated upstream
-        <Button
-            android:id="@+id/loginButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/passwordInput"
-            android:layout_marginTop="30dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:backgroundTint="#1E90FF"
-            android:text="Login"
-            android:textColor="#FFFFFF"/>
-=======
                 <TextView
                     android:id="@+id/loginTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:text="Welcome Back"
-                    android:textColor="#000000"
                     android:textSize="24sp"
+                    android:textColor="#000000"
                     android:textStyle="bold" />
 
                 <!-- Email Field with Icon -->
@@ -94,7 +50,7 @@
 
                     <EditText
                         android:id="@+id/emailInput"
-                        android:layout_width="296dp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:backgroundTint="#000000"
@@ -108,7 +64,6 @@
                         android:layout_marginStart="10dp"
                         android:contentDescription="Email Icon"
                         android:src="@drawable/Email_icon" />
-
                 </LinearLayout>
 
                 <!-- Password Field with Icon -->
@@ -138,7 +93,6 @@
                         android:layout_marginStart="10dp"
                         android:contentDescription="Password Icon"
                         android:src="@drawable/pass_icon" />
-
                 </LinearLayout>
 
                 <Button
@@ -164,18 +118,6 @@
 
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
->>>>>>> Stashed changes
 
-        <TextView
-            android:id="@+id/registerLink"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/loginButton"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
-            android:text="Don't have an account? Register"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp"/>
     </RelativeLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
