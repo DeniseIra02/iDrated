@@ -2,7 +2,10 @@ package com.example.idrated
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.InputType
 import android.widget.Toast
+import android.widget.ImageView
+import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.example.idrated.databinding.ActivityRegisterBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -21,6 +24,23 @@ class RegisterActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
+
+        // Initialize the password toggle buttons
+        val passwordToggle: ImageView = binding.registerPasswordVisibilityToggle
+        val confirmPasswordToggle: ImageView = binding.confirmPasswordVisibilityToggle
+
+        val passwordInput: EditText = binding.registerPasswordInput
+        val confirmPasswordInput: EditText = binding.confirmPasswordInput
+
+        // Toggle password visibility
+        passwordToggle.setOnClickListener {
+            togglePasswordVisibility(passwordInput, passwordToggle)
+        }
+
+        // Toggle confirm password visibility
+        confirmPasswordToggle.setOnClickListener {
+            togglePasswordVisibility(confirmPasswordInput, confirmPasswordToggle)
+        }
 
         binding.registerButton.setOnClickListener {
             val email = binding.registerEmailInput.text.toString()
@@ -68,5 +88,19 @@ class RegisterActivity : AppCompatActivity() {
                     Toast.makeText(this, "Registration failed: $errorMessage", Toast.LENGTH_SHORT).show()
                 }
             }
+    }
+
+    private fun togglePasswordVisibility(passwordInput: EditText, passwordToggle: ImageView) {
+        if (passwordInput.inputType == (InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD)) {
+            // Show password
+            passwordInput.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+            passwordToggle.setImageResource(R.drawable.ic_visibility)
+        } else {
+            // Hide password
+            passwordInput.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+            passwordToggle.setImageResource(R.drawable.ic_visibility_off)
+        }
+        // Move the cursor to the end of the text
+        passwordInput.setSelection(passwordInput.text.length)
     }
 }
