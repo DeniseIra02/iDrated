@@ -28,7 +28,7 @@ class GoalActivity : AppCompatActivity() {
         loadWaterGoalAndConsumed()
 
         binding.btnSetDailyGoal.setOnClickListener {
-            val intent = Intent(this, GenderSelectionActivity::class.java)
+            val intent = Intent(this, GoalActivity::class.java)
             startActivity(intent)
         }
 

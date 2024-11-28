@@ -2,4 +2,7 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="colorBackgroundWater">#E0F7FA</color>
+    <color name="colorPrimary">#0097A7</color>
+    <color name="colorProgressWater">#00ACC1</color>
 </resources>

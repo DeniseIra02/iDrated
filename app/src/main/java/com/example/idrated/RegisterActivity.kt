@@ -1,5 +1,6 @@
 package com.example.idrated
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -50,7 +51,13 @@ class RegisterActivity : AppCompatActivity() {
                     db.collection("users").document(userId!!)
                         .set(userMap)
                         .addOnSuccessListener {
+                            // Show success message
                             Toast.makeText(this, "Registration successful", Toast.LENGTH_SHORT).show()
+
+                            // Start OnboardingActivity after successful registration
+                            val intent = Intent(this, OnboardingActivity::class.java)
+                            startActivity(intent)
+                            finish()  // Optional: Finish the RegisterActivity so user cannot return to it
                         }
                         .addOnFailureListener {
                             Toast.makeText(this, "Failed to save user details", Toast.LENGTH_SHORT).show()
