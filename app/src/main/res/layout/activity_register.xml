@@ -5,86 +5,148 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RegisterActivity">
+    tools:context=".RegisterActivity"
+    android:background="#87CEEB">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#87CEEB">
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="8dp"
+        app:cardBackgroundColor="#FFFFFF"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-        <TextView
-            android:id="@+id/registerTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="50dp"
-            android:text="Create an Account"
-            android:textSize="24sp"
-            android:textColor="#FFFFFF"
-            android:textStyle="bold"/>
-
-        <EditText
-            android:id="@+id/registerEmailInput"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/registerTitle"
-            android:layout_marginTop="30dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:hint="Email"
-            android:backgroundTint="#FFFFFF"
-            android:textColor="#FFFFFF"/>
+            android:padding="20dp">
 
-        <EditText
-            android:id="@+id/registerPasswordInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/registerEmailInput"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:hint="Password"
-            android:backgroundTint="#FFFFFF"
-            android:textColor="#FFFFFF"
-            android:inputType="textPassword"/>
+            <TextView
+                android:id="@+id/registerTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:text="Create an Account"
+                android:textSize="24sp"
+                android:textColor="#87CEEB"
+                android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/confirmPasswordInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/registerPasswordInput"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:hint="Confirm Password"
-            android:backgroundTint="#FFFFFF"
-            android:textColor="#FFFFFF"
-            android:inputType="textPassword"/>
+            <!-- Email Input with Icon on the Right -->
+            <LinearLayout
+                android:id="@+id/registerEmailContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/registerTitle"
+                android:layout_marginTop="20dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/registerButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/confirmPasswordInput"
-            android:layout_marginTop="30dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:backgroundTint="#1E90FF"
-            android:text="Register"
-            android:textColor="#FFFFFF"/>
+                <EditText
+                    android:id="@+id/registerEmailInput"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Email"
+                    android:backgroundTint="#87CEEB"
+                    android:textColor="#000000" />
 
-        <TextView
-            android:id="@+id/loginLink"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/registerButton"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
-            android:text="Already have an account? Login"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp"/>
-    </RelativeLayout>
+                <ImageView
+                    android:id="@+id/registerEmailIcon"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="10dp"
+                    android:contentDescription="Email Icon"
+                    android:src="@drawable/email_icon" />
 
 
+            </LinearLayout>
+
+            <!-- Password Input with Icon on the Right and Visibility Toggle -->
+            <LinearLayout
+                android:id="@+id/registerPasswordContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/registerEmailContainer"
+                android:layout_marginTop="20dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/registerPasswordInput"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Password"
+                    android:backgroundTint="#87CEEB"
+                    android:textColor="#000000"
+                    android:inputType="textPassword" />
+
+                <ImageView
+                    android:id="@+id/registerPasswordVisibilityToggle"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="10dp"
+                    android:contentDescription="Toggle Password Visibility"
+                    android:src="@drawable/ic_visibility_off" />
+            </LinearLayout>
+
+            <!-- Confirm Password Input with Icon on the Right and Visibility Toggle -->
+            <LinearLayout
+                android:id="@+id/confirmPasswordContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/registerPasswordContainer"
+                android:layout_marginTop="20dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/confirmPasswordInput"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Confirm Password"
+                    android:backgroundTint="#87CEEB"
+                    android:textColor="#000000"
+                    android:inputType="textPassword" />
+
+                <ImageView
+                    android:id="@+id/confirmPasswordVisibilityToggle"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="10dp"
+                    android:contentDescription="Toggle Confirm Password Visibility"
+                    android:src="@drawable/ic_visibility_off" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/registerButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/confirmPasswordContainer"
+                android:layout_marginTop="30dp"
+                android:backgroundTint="#006bb3"
+                android:text="Register"
+                android:textColor="#FFFFFF" />
+
+            <TextView
+                android:id="@+id/loginLink"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/registerButton"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:text="Already have an account? Login"
+                android:textColor="#006bb3"
+                android:textSize="16sp" />
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
