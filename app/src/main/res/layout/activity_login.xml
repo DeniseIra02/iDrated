@@ -63,7 +63,7 @@
                         android:layout_height="24dp"
                         android:layout_marginStart="10dp"
                         android:contentDescription="Email Icon"
-                        android:src="@drawable/Email_icon" />
+                        android:src="@drawable/email_icon" />
                 </LinearLayout>
 
                 <!-- Password Field with Icon -->
