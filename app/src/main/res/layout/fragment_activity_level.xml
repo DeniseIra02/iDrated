@@ -4,23 +4,64 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:padding="16dp">
+    android:padding="10dp">
 
-    <Button
-        android:id="@+id/lowActivityButton"
+    <!-- Button for Sedentary -->
+    <TextView
+        android:id="@+id/activityCaptionTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Low Activity" />
+        android:text="Select your activity level:"
+        android:textColor="@android:color/black"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="5dp"
+        android:fontFamily="@font/poppins" />
 
+
+    <!-- ImageView to display an image -->
+    <ImageView
+        android:id="@+id/activityImageView"
+        android:layout_width="match_parent"
+        android:layout_height="325dp"
+        android:src="@drawable/active"
+        android:scaleType="centerCrop"
+        android:layout_marginBottom="5dp" />
+
+    <!-- Caption TextView to show the selected activity level -->
+
+    <!-- Button for Moderate Activity -->
     <Button
-        android:id="@+id/mediumActivityButton"
+        android:id="@+id/sedentaryButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Medium Activity" />
+        android:text="Sedentary"
+        android:fontFamily="@font/poppins" />
 
     <Button
-        android:id="@+id/highActivityButton"
+        android:id="@+id/moderateActivityButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="High Activity" />
+        android:text="Moderate Activity"
+        android:fontFamily="@font/poppins" />
+
+    <!-- Button for Highly Active -->
+    <Button
+        android:id="@+id/highlyActiveButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Highly Active"
+        android:fontFamily="@font/poppins" />
+
+    <!-- TextView for description -->
+    <TextView
+        android:id="@+id/activityDescriptionTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:layout_marginTop="10dp"
+        android:textColor="@android:color/black"
+        android:fontFamily="@font/poppins" />
 </LinearLayout>

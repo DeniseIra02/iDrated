@@ -14,25 +14,36 @@
         tools:targetApi="31"
         tools:ignore="ExtraText">
 
-        <activity android:name=".SplashScreenActivity" android:exported="true">
+        <!-- SplashScreenActivity - Initial Launch Screen -->
+        <activity
+            android:name=".SplashScreenActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".OnboardingActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>\
+        <!-- LoginActivity - After SplashScreen -->
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false" />
 
-        <activity android:name=".GoalActivity" android:exported="false" />
-        <activity android:name=".LoginActivity" android:exported="false" />
-        <activity android:name=".RegisterActivity" android:exported="false" />
+        <!-- RegisterActivity - Alternative after SplashScreen -->
+        <activity
+            android:name=".RegisterActivity"
+            android:exported="false" />
+
+        <!-- OnboardingActivity - After successful login or registration -->
+        <activity
+            android:name=".OnboardingActivity"
+            android:exported="true"
+            tools:ignore="IntentFilterExportedReceiver" />
+
+        <!-- GoalActivity - Final destination after onboarding -->
+        <activity
+            android:name=".GoalActivity"
+            android:exported="false" />
 
     </application>
-
 </manifest>

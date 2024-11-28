@@ -35,7 +35,8 @@
                 android:text="Create an Account"
                 android:textSize="24sp"
                 android:textColor="#87CEEB"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:fontFamily="@font/poppins" />
 
             <!-- Email Input with Icon on the Right -->
             <LinearLayout
@@ -54,7 +55,8 @@
                     android:layout_weight="1"
                     android:hint="Email"
                     android:backgroundTint="#87CEEB"
-                    android:textColor="#000000" />
+                    android:textColor="#000000"
+                    android:fontFamily="@font/poppins" />
 
                 <ImageView
                     android:id="@+id/registerEmailIcon"
@@ -85,7 +87,8 @@
                     android:hint="Password"
                     android:backgroundTint="#87CEEB"
                     android:textColor="#000000"
-                    android:inputType="textPassword" />
+                    android:inputType="textPassword"
+                    android:fontFamily="@font/poppins" />
 
                 <ImageView
                     android:id="@+id/registerPasswordVisibilityToggle"
@@ -114,7 +117,8 @@
                     android:hint="Confirm Password"
                     android:backgroundTint="#87CEEB"
                     android:textColor="#000000"
-                    android:inputType="textPassword" />
+                    android:inputType="textPassword"
+                    android:fontFamily="@font/poppins" />
 
                 <ImageView
                     android:id="@+id/confirmPasswordVisibilityToggle"
@@ -133,7 +137,8 @@
                 android:layout_marginTop="30dp"
                 android:backgroundTint="#006bb3"
                 android:text="Register"
-                android:textColor="#FFFFFF" />
+                android:textColor="#FFFFFF"
+                android:fontFamily="@font/poppins" />
 
             <TextView
                 android:id="@+id/loginLink"
@@ -144,7 +149,8 @@
                 android:layout_marginTop="20dp"
                 android:text="Already have an account? Login"
                 android:textColor="#006bb3"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:fontFamily="@font/poppins" />
         </RelativeLayout>
 
     </androidx.cardview.widget.CardView>
