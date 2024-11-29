@@ -17,6 +17,16 @@
         android:orientation="vertical"
         android:padding="16dp">
 
+        <TextView
+            android:id="@+id/deviceNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No device connected"
+            android:textSize="16sp"
+            android:layout_marginTop="16dp"
+            android:layout_gravity="center" />
+
+
         <!-- Water Intake Progress -->
         <ProgressBar
             android:id="@+id/progressBar"
