@@ -2,18 +2,12 @@ package com.example.idrated
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
-import android.widget.TextView
-import android.animation.ValueAnimator
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
-import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayoutMediator
 
 class OnboardingActivity : AppCompatActivity() {
 
-    private lateinit var waterFillView: View
     private lateinit var nextButton: Button
     private lateinit var viewPager: ViewPager2
 
@@ -21,14 +15,11 @@ class OnboardingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_onboarding)
 
-        // Initialize the water fill view
-        waterFillView = findViewById(R.id.waterFillView)
-
         // Set up ViewPager2 and its adapter
         viewPager = findViewById(R.id.viewPager)
         viewPager.adapter = OnboardingAdapter(this)
 
-        // Disable swipe gestures
+        // Disable swipe gestures (optional)
         viewPager.isUserInputEnabled = false
 
         // Set up Next button
@@ -37,7 +28,6 @@ class OnboardingActivity : AppCompatActivity() {
             val currentItem = viewPager.currentItem
             if (currentItem < 3) {
                 viewPager.currentItem = currentItem + 1
-                animateWaterFill(currentItem + 1)
                 updateButtonText(currentItem + 1)
             } else {
                 navigateToGoalActivity()
@@ -45,34 +35,19 @@ class OnboardingActivity : AppCompatActivity() {
         }
     }
 
-    // Function to animate the water filling effect
-    private var currentHeight = 0f
-
-    private fun animateWaterFill(progress: Int) {
-        val targetHeight = (progress * 200).toFloat()
-        val animator = ValueAnimator.ofFloat(currentHeight, targetHeight)
-        animator.duration = 1000
-        animator.addUpdateListener {
-            val value = it.animatedValue as Float
-            val layoutParams = waterFillView.layoutParams
-            layoutParams.height = value.toInt()
-            waterFillView.layoutParams = layoutParams
-        }
-        animator.start()
-        currentHeight = targetHeight
-    }
-
+    // Update the button text when we reach the last page
     private fun updateButtonText(currentPage: Int) {
         if (currentPage == 3) {
-            nextButton.text = "Get Started"
+            nextButton.text = "Get Started"  // Change to "Get Started" on the last page
         } else {
-            nextButton.text = "Next"
+            nextButton.text = ""  // No text (only the icon) on intermediate pages
         }
     }
 
+    // Navigate to the next activity
     private fun navigateToGoalActivity() {
         val intent = Intent(this, GoalActivity::class.java)
         startActivity(intent)
-        finish()
+        finish()  // Finish the current activity
     }
 }
