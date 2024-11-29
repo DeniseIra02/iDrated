@@ -7,22 +7,23 @@
     android:padding="16dp">
 
     <!-- ImageView for the hydration tip -->
+
+    <!-- TextView for the hydration tip -->
     <ImageView
         android:id="@+id/hydrationImage"
         android:layout_width="wrap_content"
         android:layout_height="400dp"
-        android:src="@drawable/tips"
+        android:layout_marginBottom="16dp"
         android:scaleType="centerCrop"
-        android:layout_marginBottom="16dp" />
+        android:src="@drawable/tips" />
 
-    <!-- TextView for the hydration tip -->
     <TextView
         android:id="@+id/hydrationTipText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins"
+        android:gravity="center"
         android:text="Hydration Tip will appear here"
         android:textSize="22sp"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:fontFamily="@font/poppins" />
+        android:textStyle="bold" />
 </LinearLayout>
