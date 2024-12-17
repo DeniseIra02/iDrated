@@ -23,34 +23,70 @@ import java.util.*
 
 class GoalActivity : AppCompatActivity() {
 
+    // Firebase
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
-    private lateinit var binding: ActivityGoalBinding
 
+    // Bluetooth-related variables
     private val bluetoothPermissionRequestCode = 1
     private val bluetoothAdapter: BluetoothAdapter? = BluetoothAdapter.getDefaultAdapter()
     private var bluetoothSocket: BluetoothSocket? = null
     private var inputStream: InputStream? = null
     private var isConnected = false
-
     private val pairedDevicesList = mutableListOf<BluetoothDevice>()
 
+    // Binding
+    private lateinit var binding: ActivityGoalBinding
+
+    // Activity Creation
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityGoalBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Initialize Firebase
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
 
+        // Permissions & Setup
         checkAndRequestPermissions()
+        setupBluetoothDropdown()
+        setupUIListeners()
+    }
 
-        // Set daily goal button
+    // Function to handle permissions
+    private fun checkAndRequestPermissions() {
+        val permissions = arrayOf(
+            android.Manifest.permission.BLUETOOTH,
+            android.Manifest.permission.BLUETOOTH_ADMIN,
+            android.Manifest.permission.BLUETOOTH_CONNECT,
+            android.Manifest.permission.BLUETOOTH_SCAN
+        )
+
+        // Check missing permissions
+        val missingPermissions = permissions.filter {
+            ContextCompat.checkSelfPermission(this, it) != PackageManager.PERMISSION_GRANTED
+        }
+
+        if (missingPermissions.isNotEmpty()) {
+            ActivityCompat.requestPermissions(
+                this,
+                missingPermissions.toTypedArray(),
+                bluetoothPermissionRequestCode
+            )
+        } else {
+            loadPairedDevices()
+        }
+    }
+
+    // UI Click Listeners
+    private fun setupUIListeners() {
+        // Button for setting daily goal
         binding.btnSetDailyGoal.setOnClickListener {
             startActivity(Intent(this, GenderInputFragment::class.java))
         }
 
-        // Add water button
+        // Button for adding water intake
         binding.addWaterButton.setOnClickListener {
             val waterIntake = binding.waterInput.text.toString().toIntOrNull()
             if (waterIntake != null && waterIntake > 0) {
@@ -61,48 +97,18 @@ class GoalActivity : AppCompatActivity() {
             }
         }
 
-        // Logout button
+        // Logout Button
         binding.LogoutBtn.setOnClickListener {
             auth.signOut()
-            val intent = Intent(this, LoginActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
+            Intent(this, LoginActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(this)
+            }
             finish()
         }
-
-        setupBluetoothDropdown()
     }
 
-    private fun checkAndRequestPermissions() {
-        val permissions = arrayOf(
-            android.Manifest.permission.BLUETOOTH,
-            android.Manifest.permission.BLUETOOTH_ADMIN,
-            android.Manifest.permission.BLUETOOTH_CONNECT,
-            android.Manifest.permission.BLUETOOTH_SCAN
-        )
-        val missingPermissions = permissions.filter {
-            ContextCompat.checkSelfPermission(this, it) != PackageManager.PERMISSION_GRANTED
-        }
-
-        if (missingPermissions.isNotEmpty()) {
-            ActivityCompat.requestPermissions(this, missingPermissions.toTypedArray(), bluetoothPermissionRequestCode)
-        } else {
-            loadPairedDevices()
-        }
-    }
-
-    private fun setupBluetoothDropdown() {
-        binding.connectButton.setOnClickListener {
-            val selectedDeviceIndex = binding.deviceDropdown.selectedItemPosition
-            if (selectedDeviceIndex >= 0 && selectedDeviceIndex < pairedDevicesList.size) {
-                connectToDevice(pairedDevicesList[selectedDeviceIndex])
-            } else {
-                Toast.makeText(this, "Please select a device", Toast.LENGTH_SHORT).show()
-            }
-        }
-        loadPairedDevices()
-    }
-
+    // Load Paired Bluetooth Devices
     @SuppressLint("MissingPermission")
     private fun loadPairedDevices() {
         pairedDevicesList.clear()
@@ -114,6 +120,18 @@ class GoalActivity : AppCompatActivity() {
         }
     }
 
+    // Connect to Selected Device
+    private fun setupBluetoothDropdown() {
+        binding.connectButton.setOnClickListener {
+            val selectedIndex = binding.deviceDropdown.selectedItemPosition
+            if (selectedIndex in pairedDevicesList.indices) {
+                connectToDevice(pairedDevicesList[selectedIndex])
+            } else {
+                Toast.makeText(this, "Please select a valid device", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
     private fun connectToDevice(device: BluetoothDevice) {
         if (isConnected) {
             Toast.makeText(this, "Already connected to a device", Toast.LENGTH_SHORT).show()
@@ -121,37 +139,36 @@ class GoalActivity : AppCompatActivity() {
         }
 
         try {
-            val uuid: UUID = device.uuids?.firstOrNull()?.uuid
+            val uuid = device.uuids?.firstOrNull()?.uuid
                 ?: UUID.fromString("00001101-0000-1000-8000-00805F9B34FB") // Default SPP UUID
             bluetoothSocket = device.createRfcommSocketToServiceRecord(uuid)
             bluetoothSocket?.connect()
 
             inputStream = bluetoothSocket?.inputStream
             isConnected = true
-            binding.deviceNameTextView.text = "Connected to: ${device.name}"
 
+            binding.deviceNameTextView.text = "Connected to: ${device.name}"
             Toast.makeText(this, "Connected to ${device.name}", Toast.LENGTH_SHORT).show()
             startReadingData()
         } catch (e: Exception) {
-            e.printStackTrace()
+            Log.e("Bluetooth", "Connection failed: ${e.message}")
             closeBluetoothConnection()
             Toast.makeText(this, "Connection failed: ${e.message}", Toast.LENGTH_SHORT).show()
         }
     }
 
+    // Start Reading Data via Bluetooth
     private fun startReadingData() {
         val handler = Handler(Looper.getMainLooper())
         Thread {
             try {
-                Log.d("Bluetooth", "Starting data read thread")
+                val buffer = ByteArray(1024)
                 while (isConnected) {
-                    val buffer = ByteArray(1024)
                     val bytesRead = inputStream?.read(buffer)
                     if (bytesRead != null && bytesRead > 0) {
                         val receivedData = String(buffer, 0, bytesRead)
-                        Log.d("Bluetooth", "Data received: $receivedData")
                         handler.post {
-                            binding.receivedDataTextView.text = "Received Data: $receivedData"
+                            binding.receivedDataTextView.text = "Received: $receivedData"
                         }
                     }
                 }
@@ -162,56 +179,35 @@ class GoalActivity : AppCompatActivity() {
         }.start()
     }
 
-
+    // Update Water Consumed in Firestore
     private fun updateWaterConsumed(waterIntake: Int) {
         val currentUser = auth.currentUser
         if (currentUser != null) {
-            val userId = currentUser.uid
+            val userRef = db.collection("users").document(currentUser.uid)
+            userRef.get()
+                .addOnSuccessListener { doc ->
+                    val current = doc.getLong("waterConsumed")?.toInt() ?: 0
+                    val updated = current + waterIntake
 
-            val userDocRef = db.collection("users").document(userId)
-            userDocRef.get()
-                .addOnSuccessListener { document ->
-                    if (document.exists()) {
-                        val currentWaterIntake = document.getLong("waterConsumed")?.toInt() ?: 0
-                        val updatedWaterIntake = currentWaterIntake + waterIntake
-
-                        userDocRef.update("waterConsumed", updatedWaterIntake)
-                            .addOnSuccessListener {
-                                binding.receivedDataTextView.text =
-                                    "Water Consumed: $updatedWaterIntake ml"
-                                Toast.makeText(this, "Water intake updated!", Toast.LENGTH_SHORT).show()
-                            }
-                            .addOnFailureListener { e ->
-                                Toast.makeText(this, "Failed to update water intake: ${e.message}", Toast.LENGTH_SHORT).show()
-                            }
-                    } else {
-                        userDocRef.set(mapOf("waterConsumed" to waterIntake))
-                            .addOnSuccessListener {
-                                binding.receivedDataTextView.text =
-                                    "Water Consumed: $waterIntake ml"
-                                Toast.makeText(this, "Water intake updated!", Toast.LENGTH_SHORT).show()
-                            }
-                            .addOnFailureListener { e ->
-                                Toast.makeText(this, "Failed to set water intake: ${e.message}", Toast.LENGTH_SHORT).show()
-                            }
-                    }
-                }
-                .addOnFailureListener { e ->
-                    Toast.makeText(this, "Error retrieving user data: ${e.message}", Toast.LENGTH_SHORT).show()
+                    userRef.update("waterConsumed", updated)
+                        .addOnSuccessListener {
+                            binding.updatedWaterIntake.text = "$updated ml"
+                            Toast.makeText(this, "Water intake updated!", Toast.LENGTH_SHORT).show()
+                        }
+                        .addOnFailureListener {
+                            Toast.makeText(this, "Failed to update water", Toast.LENGTH_SHORT).show()
+                        }
                 }
         } else {
             Toast.makeText(this, "User not authenticated", Toast.LENGTH_SHORT).show()
         }
     }
 
+    // Bluetooth Cleanup
     private fun closeBluetoothConnection() {
-        try {
-            inputStream?.close()
-            bluetoothSocket?.close()
-            isConnected = false
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
+        inputStream?.close()
+        bluetoothSocket?.close()
+        isConnected = false
     }
 
     override fun onDestroy() {
