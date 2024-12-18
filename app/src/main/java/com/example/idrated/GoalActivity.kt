@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.idrated.databinding.ActivityGoalBinding
+import com.example.idrated.WaterInputActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import java.io.InputStream
@@ -38,16 +39,22 @@ class GoalActivity : AppCompatActivity() {
     // Binding
     private lateinit var binding: ActivityGoalBinding
 
+    // GoalActivity.kt
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityGoalBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Initialize Firebase
+        // Get the water amount from the Intent that was passed from WaterInputActivity
+        val waterAmount = intent.getDoubleExtra("waterAmount", 0.0)
+
+        // Display the water amount in the goalDisplay TextView
+        binding.goalDisplay.text = "${waterAmount.toInt()} ml"
+
+        // Initialize Firebase and other setups
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
 
-        // Permissions & Bluetooth Setup
         checkBluetoothState()
         setupUIListeners()
     }
@@ -105,7 +112,7 @@ class GoalActivity : AppCompatActivity() {
 
     private fun setupUIListeners() {
         binding.btnSetDailyGoal.setOnClickListener {
-            startActivity(Intent(this, GenderInputFragment::class.java))
+            startActivity(Intent(this, WaterInputActivity::class.java))
         }
 
         binding.addWaterButton.setOnClickListener {

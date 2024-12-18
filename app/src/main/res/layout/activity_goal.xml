@@ -64,7 +64,6 @@
     </LinearLayout>
 
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -88,11 +87,11 @@
             <TextView
                 android:id="@+id/updatedWaterIntake"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="000"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="135dp"
-                android:textSize="25sp"
-                android:textColor="#00008B" />
+                android:text="000"
+                android:textColor="#00008B"
+                android:textSize="25sp" />
 
             <TextView
                 android:id="@+id/tv_slash"
@@ -107,8 +106,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="000"
-                android:textSize="25sp"
-                android:textColor="#00008B"/>
+                android:textColor="#00008B"
+                android:textSize="25sp" />
 
             <TextView
                 android:id="@+id/tv_ml"
