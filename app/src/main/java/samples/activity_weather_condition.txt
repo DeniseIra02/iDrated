@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ADD8E6"
-    tools:context=".WeatherConditionActivity">
+    tools:context="samples.WeatherConditionActivity">
 
     <TextView
         android:id="@+id/tv_weather_title"

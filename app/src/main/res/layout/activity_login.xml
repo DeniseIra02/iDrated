@@ -16,9 +16,9 @@
         <!-- White Box -->
         <androidx.cardview.widget.CardView
             android:id="@+id/whiteBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="30dp"
+            android:layout_width="600dp"
+            android:layout_height="400dp"
+            android:layout_margin="20dp"
             app:cardCornerRadius="20dp"
             app:cardElevation="4dp"
             android:layout_centerInParent="true">
@@ -33,10 +33,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:text="Welcome Back"
+                    android:text="Welcome !"
                     android:textSize="24sp"
-                    android:textColor="#000000"
-                    android:textStyle="bold" />
+                    android:textColor="#87CEEB"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/poppins"/>
 
                 <!-- Email Field with Icon -->
                 <LinearLayout
@@ -87,12 +88,12 @@
                         android:textColor="#000000" />
 
                     <ImageView
-                        android:id="@+id/passwordIcon"
+                        android:id="@+id/showHidePasswordIcon"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_marginStart="10dp"
-                        android:contentDescription="Password Icon"
-                        android:src="@drawable/pass_icon" />
+                        android:contentDescription="Show/Hide Password Icon"
+                        android:src="@drawable/ic_visibility_off" />
                 </LinearLayout>
 
                 <Button
@@ -101,7 +102,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/passwordContainer"
                     android:layout_marginTop="30dp"
-                    android:backgroundTint="#1E90FF"
+                    android:backgroundTint="#006bb3"
                     android:text="Login"
                     android:textColor="#FFFFFF" />
 
@@ -113,11 +114,10 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="20dp"
                     android:text="Don't have an account? Register"
-                    android:textColor="#1E90FF"
-                    android:textSize="16sp" />
-
+                    android:textColor="#006bb3"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/poppins" />
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
-
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

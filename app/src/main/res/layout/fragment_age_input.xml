@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:gravity="center_horizontal">
+
+    <!-- Top Space -->
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".6" />
+
+    <!-- Title TextView for the instruction -->
+    <TextView
+        android:id="@+id/chooseAgeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Choose your age:"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="16dp"
+        android:textColor="@android:color/black"
+        android:fontFamily="@font/poppins" /> <!-- Poppins font applied -->
+
+    <!-- ImageView for the top image -->
+    <ImageView
+        android:id="@+id/headerImage"
+        android:layout_width="match_parent"
+        android:layout_height="280dp"
+        android:layout_marginBottom="16dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/age" />
+
+    <!-- SeekBar for selecting age -->
+    <SeekBar
+        android:id="@+id/ageSeekBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="100"
+        android:layout_marginBottom="20dp"
+        android:padding="5dp"
+        android:minHeight="30dp"
+        android:thumbTint="@color/colorPrimary"
+        android:progressTint="@color/colorPrimary"
+        android:indeterminateTint="@color/colorPrimary" />
+
+    <!-- Display selected age -->
+    <TextView
+        android:id="@+id/ageText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Age: 0"
+        android:textSize="20sp"
+        android:textColor="@android:color/black"
+        android:fontFamily="@font/poppins" /> <!-- Poppins font applied -->
+
+    <!-- Bottom Space -->
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+</LinearLayout>
