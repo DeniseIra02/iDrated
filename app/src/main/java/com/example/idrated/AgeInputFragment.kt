@@ -1,69 +1,45 @@
 package com.example.idrated
 
+import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.SeekBar
 import android.widget.TextView
-import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
-import com.example.idrated.databinding.FragmentAgeInputBinding
 
-class AgeInputFragment : Fragment() {
-    private lateinit var auth: FirebaseAuth
-    private lateinit var database: FirebaseDatabase
-    private lateinit var binding: FragmentAgeInputBinding
+class AgeInputFragment : Fragment(R.layout.fragment_age_input) {
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentAgeInputBinding.inflate(inflater, container, false)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        // Initialize Firebase Auth and Database reference
-        auth = FirebaseAuth.getInstance()
-        database = FirebaseDatabase.getInstance()
+        val ageSeekBar: SeekBar = view.findViewById(R.id.ageSeekBar)
+        val ageText: TextView = view.findViewById(R.id.ageText)
 
-        // Set up SeekBar listener to display selected age
-        binding.ageSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        // Resize and tint the thumb dynamically
+        val thumbDrawable: Drawable = ageSeekBar.thumb
+        val thumbWidth = 1000 // desired width of thumb
+        val thumbHeight = 1000 // desired height of thumb
+
+        // Wrap and tint the thumb drawable
+        val wrappedDrawable = DrawableCompat.wrap(thumbDrawable)
+        DrawableCompat.setTint(wrappedDrawable, ContextCompat.getColor(requireContext(), R.color.colorPrimary))
+
+        // Set the bounds of the thumb drawable
+        wrappedDrawable.setBounds(0, 0, thumbWidth, thumbHeight)
+
+        // Apply the modified thumb back to the SeekBar
+        ageSeekBar.thumb = wrappedDrawable
+
+        // Update the displayed age as the SeekBar value changes
+        ageSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                binding.ageText.text = "Age: $progress"  // Update the displayed age
+                ageText.text = "Age: $progress"
             }
 
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {
-                // Do nothing for now
-            }
-
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                // Do nothing for now
-            }
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         })
-
-        // Save the selected age to Realtime Database when the user finishes choosing their age
-        binding.ageSeekBar.setOnTouchListener { _, _ ->
-            val age = binding.ageSeekBar.progress
-            saveAgeToDatabase(age)
-            true
-        }
-
-        return binding.root
-    }
-
-    // Function to save the age to the Realtime Database
-    private fun saveAgeToDatabase(age: Int) {
-        val userId = auth.currentUser?.uid
-        if (userId != null) {
-            val userRef = database.getReference("users/$userId/age")
-            userRef.setValue(age)
-                .addOnSuccessListener {
-                    Toast.makeText(requireContext(), "Age saved successfully!", Toast.LENGTH_SHORT).show()
-                }
-                .addOnFailureListener {
-                    Toast.makeText(requireContext(), "Failed to save age", Toast.LENGTH_SHORT).show()
-                }
-        }
     }
 }
